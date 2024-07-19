@@ -134,18 +134,22 @@ export class ShipmentService {
             status: true,
             statusCode: HttpStatus.OK,
             message: 'location updated',
-            data: { ...shipment.location }
+            data: { shipment }
         })
     }
 
     async updateShipmentProgress ( shipmentId: string, data: UpdateShipmentProgress ){
         const now = new Date(Date.now());
-        const shipment = await this.shipmentModel.findByIdAndUpdate(shipmentId, { shipmentProgress: {time: now, ...data}}, { new: true, runValidators: true }).exec();
+
+        const shipment = await this.shipmentModel.findById(shipmentId)
+
+        shipment.shipmentProgress.push({time: now, ...data})
+        shipment.save()
         return responseHandler({
             status: true,
             statusCode: HttpStatus.OK,
             message: 'location updated',
-            data: { ...shipment.location }
+            data: { shipment }
         })
     }
 
