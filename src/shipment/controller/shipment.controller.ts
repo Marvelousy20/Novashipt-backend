@@ -55,12 +55,12 @@ export class ShipmentController {
   }
 
   @Get('user/list')
-  @UseGuards(TokenExpirationGuard, AuthGuard('jwt'))
-  @ApiBearerAuth('Authorization')
+  // @UseGuards(TokenExpirationGuard, AuthGuard('jwt'))
+  // @ApiBearerAuth('Authorization')
   async fetchMyShipment( @Req() req: AuthenticatedRequest, @Res() res: Response, @Next() next: NextFunction) {
     try {
-        const user = req.user
-        const result = await this.shipmentService.fetchMyShipments(user)
+        //const user = req.user
+        const result = await this.shipmentService.fetchMyShipments()
       return res.status(result.statusCode).json(result);
     } catch (error) {
       logger.error(error.message, {statusCode: (error.status || 500), route: req.originalUrl, method: req.method, error: error})
@@ -75,12 +75,12 @@ export class ShipmentController {
   }
 
   @Get(':trackingId/track')
-  @UseGuards(TokenExpirationGuard, AuthGuard('jwt'))
-  @ApiBearerAuth('Authorization')
+  // @UseGuards(TokenExpirationGuard, AuthGuard('jwt'))
+  // @ApiBearerAuth('Authorization')
   async trackShipment(@Param('trackingId') trackingId: string, @Req() req: AuthenticatedRequest, @Res() res: Response, @Next() next: NextFunction) {
     try {
-        const user = req.user
-        const result = await this.shipmentService.trackMyShipments(user, trackingId)
+        //const user = req.user
+        const result = await this.shipmentService.trackMyShipments(trackingId)
       return res.status(result.statusCode).json(result);
     } catch (error) {
       logger.error(error.message, {statusCode: (error.status || 500), route: req.originalUrl, method: req.method, error: error})

@@ -57,9 +57,9 @@ export class ShipmentService {
 
     }
 
-    async fetchMyShipments( user: UserInterface){
-        const { id } = user
-        const shipments = await this.shipmentModel.find({ userId: id }).populate('enterpriseId');
+    async fetchMyShipments(){
+        //const { id } = user
+        const shipments = await this.shipmentModel.find({ userId: '669ac576763192cb88e50385' }).populate('enterpriseId');
         if (shipments.length > 0){
             for (let i = 0; i < shipments.length; i++) {
                 const shipment: any = shipments[i];
@@ -76,10 +76,10 @@ export class ShipmentService {
 
     }
 
-    async trackMyShipments( user: UserInterface, trackingId: string){
-        const { id } = user
+    async trackMyShipments( trackingId: string){
+        //const { id } = user
 
-        const checkUser = await this.userModel.findById(id);
+        const checkUser = await this.userModel.findById('669ac576763192cb88e50385');
 
         if (!checkUser) {
             return responseHandler({
