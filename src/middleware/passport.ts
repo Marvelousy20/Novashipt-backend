@@ -24,7 +24,7 @@ export class Passport extends PassportStrategy(Strategy){
 
         console.log(payload.user)
         
-        const user = await this.service.userModel.findOne({ id: payload.user._id})
+        const user = await this.service.userModel.findOne({ id: payload.user.id})
 
         if(!user){
             return done(null, false)
