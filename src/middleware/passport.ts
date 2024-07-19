@@ -21,8 +21,10 @@ export class Passport extends PassportStrategy(Strategy){
     }
 
     async validate(req: Request, payload: UserPayload, done: VerifiedCallback ): Promise<any>{
+
+        console.log(payload.user)
         
-        const user = await this.service.userModel.findOne({ id: payload.user.id})
+        const user = await this.service.userModel.findOne({ id: payload.user._id})
 
         if(!user){
             return done(null, false)
