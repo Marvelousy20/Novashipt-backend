@@ -89,7 +89,7 @@ export class ShipmentService {
                 data: {}
             })
         }
-        const shipment:any = await this.shipmentModel.findOne({ userId: id, trackingId }).populate('enterpriseId');
+        const shipment:any = await this.shipmentModel.findOne({ userId: '669ac576763192cb88e50385', trackingId }).populate('enterpriseId');
         if (!shipment){
             return responseHandler({
                 status: false,
