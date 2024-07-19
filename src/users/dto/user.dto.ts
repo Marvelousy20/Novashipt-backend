@@ -47,6 +47,16 @@ export class LoginUserDto {
     password: string;
 }
 
+export class CreateEnterpriseDto {
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+
+    @IsString()
+    @IsOptional()
+    logo: string;
+}
+
 export interface UserPayload{
     user: {
         id: string

@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
 
 export enum UserType {
   USER = 'user',
@@ -33,10 +32,10 @@ export interface UserInterface {
 
 export type UserDocument = User & Document;
 
-@Schema({ timestamps: true })
+@Schema({ timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } })
 export class User {
-  @Prop({ default: () => uuidv4() })
-  id: string;
+  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
+  _id: MongooseSchema.Types.ObjectId;
 
   @Prop({ required: true })
   fullName: string;
@@ -87,8 +86,31 @@ UserSchema.pre<UserDocument>('save', async function (next) {
 UserSchema.set('toJSON', {
   transform: function (_doc, ret, _options) {
     delete ret.password;
-    delete ret._id;
     delete ret.__v;
     return ret;
   }
+
 });
+
+UserSchema.virtual('id').get(function () {
+  return this._id.toString();
+});
+
+UserSchema.set('toJSON', {
+  virtuals: true,
+  transform: function (doc, ret) {
+    ret.id = ret._id.toString();
+    delete ret._id;
+    delete ret.__v;
+  }
+});
+
+UserSchema.set('toObject', {
+  virtuals: true,
+  transform: function (doc, ret) {
+    ret.id = ret._id.toString();
+    delete ret._id;
+    delete ret.__v;
+  }
+});
+

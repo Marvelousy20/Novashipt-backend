@@ -4,7 +4,7 @@ import { ExtractJwt, Strategy, VerifiedCallback } from "passport-jwt";
 import * as dotenv from "dotenv";
 import { UserPayload } from "src/users/dto/user.dto";
 import { Request } from "express";
-import { UserService } from "src/users/user.service";
+import { UserService } from "src/users/services/user.service";
 dotenv.config();
 
 @Injectable()

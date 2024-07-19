@@ -5,9 +5,10 @@ import { databaseProviders } from './database/database.service';
 import { UsersModule } from './users/user.module';
 import { NotificationModule } from './notification/notification.module';
 import { Passport } from './middleware/passport';
+import { ShipmentModule } from './shipment/shipment.module';
 
 @Module({
-  imports: [...databaseProviders, UsersModule, NotificationModule],
+  imports: [...databaseProviders, UsersModule, NotificationModule, ShipmentModule],
   controllers: [AppController],
   providers: [AppService, Passport],
   exports: [Passport]
